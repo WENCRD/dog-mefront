@@ -1,0 +1,139 @@
+:root {
+  --color-bg: #f5f7fa;
+  --color-text: #333;
+  --color-box: #fff;
+  --color-border: #ccc;
+  --color-primary: #007bff;
+  --color-primary-hover: #0056b3;
+  --color-error: #d93025;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1e1e1e;
+    --color-text: #f0f0f0;
+    --color-box: #2b2b2b;
+    --color-border: #444;
+    --color-primary: #3399ff;
+    --color-primary-hover: #1976d2;
+    --color-error: #ff6b6b;
+  }
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+}
+
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  background-color: var(--color-box);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+  color: var(--color-text);
+}
+
+.login-title {
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
+  color: var(--color-border);
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px 12px 12px 36px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 16px;
+  background: transparent;
+  color: var(--color-text);
+  transition: border 0.2s ease;
+}
+
+.login-input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.login-button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.login-button:active {
+  transform: scale(0.98);
+}
+
+.login-button.disabled {
+  background-color: #99c2ff;
+  cursor: not-allowed;
+}
+
+.login-error {
+  margin-top: 12px;
+  color: var(--color-error);
+  font-size: 14px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+  .login-box {
+    padding: 24px;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+
+  .login-input,
+  .login-button {
+    font-size: 15px;
+    padding: 10px 12px;
+  }
+}

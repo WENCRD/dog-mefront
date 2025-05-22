@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "ES2022", // Utilise ES2022 pour la compilation
+    "lib": [
+      "ES2023"
+    ], // Utilise les bibliothèques ES2023 pour les types
+    "module": "ESNext", // Utilise ESNext pour la résolution des modules
+    "skipLibCheck": true, // Ignore la vérification des types des bibliothèques externes
+
+    /* Bundler mode */
+    "moduleResolution": "node", // Utilisation du mode de résolution des modules basé sur Node.js
+    "allowImportingTsExtensions": true, // Permet d'importer des fichiers TypeScript avec des extensions `.ts`
+    "isolatedModules": true, // Permet de s'assurer que chaque fichier fonctionne indépendamment (utile pour le transpileur)
+    "moduleDetection": "force", // Détecte de manière forcée les modules
+    "noEmit": true, // Empêche la sortie des fichiers lors de la compilation, utile si tu veux uniquement vérifier les types
+    /* Linting */
+    "strict": true, // Active toutes les vérifications strictes de TypeScript
+    "noUnusedLocals": true, // Erreur si des variables locales ne sont pas utilisées
+    "noUnusedParameters": true, // Erreur si des paramètres de fonction ne sont pas utilisés
+    "noFallthroughCasesInSwitch": true, // Évite les erreurs de cas de switch sans `break`
+    "noUncheckedSideEffectImports": true // Empêche l'importation de modules avec des effets secondaires non vérifiés
+  },
+  "include": [
+    "src"
+  ], // Assure-toi que le dossier `src` est inclus dans la compilation
+  "exclude": [
+    "node_modules"
+  ] // Exclut le dossier `node_modules`
+}
