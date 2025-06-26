@@ -1,54 +1,86 @@
-# React + TypeScript + Vite
+# 🐶 DogAndMe - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend de l’application **DogAndMe**, développée en **React + Vite + TypeScript**.  
+Cette interface permet la navigation, la connexion admin, l’envoi de fichiers et l’affichage de contenus liés au service.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Stack technique
 
-## Expanding the ESLint configuration
+- ⚛️ React 19 (avec TSX)
+- ⚡ Vite (build ultra-rapide)
+- 🎨 Tailwind CSS
+- 📦 Swiper (carrousels)
+- 📂 Architecture modulaire : `components/`, `pages/`, `routes/`, `services/`, etc.
+- 🔐 Authentification via token JWT
+- 🌐 Communication avec un backend Express (voir `dogandme-back`)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📁 Arborescence
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+dog-mefront/
+├── public/
+├── src/
+│ ├── assets/ # images, icônes, etc.
+│ ├── components/ # composants UI réutilisables
+│ ├── context/ # gestion du state global / auth context
+│ ├── pages/ # pages comme Home, Login, Admin, etc.
+│ ├── routes/ # routes protégées (ex: PrivateRoute)
+│ ├── services/ # appels API, auth, etc.
+│ ├── types/ # définitions TypeScript (ex: swiper)
+│ └── App.tsx # point d’entrée principal
+├── .env # non versionné
+├── .env.example # variables d’environnement attendues
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Lancer le projet en local
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### 1. Cloner le dépôt
+
+```bash
+git clone https://github.com/WENCRD/dog-mefront.git
+cd dog-mefront
+
+```bash
+git clone https://github.com/WENCRD/dogandme-back.git
+cd dogandme-back
+
+### 2. Installer les dépendances
+
+npm install
+
+### 3.Créer un fichier .env
+PORT=4000
+JWT_SECRET=*****
+ADMIN_EMAIL=********@********.fr
+ADMIN_PASSWORD=************
+
+
+### 4. Lancer le serveur
+
+npm run dev
+
+### 5. Authentification
+ 
+Formulaire de connexion /login
+
+Auth via token JWT stocké en localStorage
+
+Routes protégées via PrivateRoute dans routes/
+
+
+
+### 6.Carrousels / Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+### 7. Dépendances externes
+npm install react-router-dom swiper axios
+
+### Projet privé – tous droits réservés.
+### LICENCE
+

@@ -14,7 +14,7 @@ const HomePage = () => {
   const [modalPrestation, setModalPrestation] = useState<string | null>(null);
   const openPrestationModal = (type: string) => {
     setModalPrestation(type);
-    setActiveCard(type); // 👈 force le visuel actif quand on clique
+    setActiveCard(type); // force le visuel actif quand on clique
   };  
   const closePrestationModal = () => {
     setModalPrestation(null);
@@ -29,8 +29,6 @@ const HomePage = () => {
 
   const [activeCard, setActiveCard] = useState<string | null>(null);
  
-
-  // const location = useLocation();
   
   useEffect(() => {
     const handleCustomScroll = () => {
@@ -50,10 +48,22 @@ const HomePage = () => {
     };
   
     window.addEventListener("locationchange", handleCustomScroll);
-    handleCustomScroll(); // ✅ aussi au premier rendu
+    handleCustomScroll(); 
   
     return () => window.removeEventListener("locationchange", handleCustomScroll);
   }, []);
+
+  const handleClick = () => {
+  if (window.location.pathname === "/") {
+    const params = new URLSearchParams(window.location.search);
+    params.set("scrollTo", "services");
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.pushState({}, "", newUrl);
+    window.dispatchEvent(new Event("locationchange"));
+  } else {
+    navigate("/services");
+  }
+};
   
   
 
@@ -93,7 +103,7 @@ const HomePage = () => {
             Offrez à votre chien une éducation personnalisée et bienveillante.
           </p>
           <div className="button-container">
-            <button className="btnhp" onClick={() => navigate("/services")}>
+            <button className="btnhp"onClick={handleClick}>
               LES PRESTATIONS
             </button>
             <button className="btnhp" onClick={() => navigate("/contact")}>
@@ -103,19 +113,27 @@ const HomePage = () => {
         </div>
       </header>
 
-      {/* Floating Phone Button */}
-      <a
-        href="tel:+33612345678"
-        className="floating-phone"
-        aria-label="Appeler l'éducateur canin"
-      >
-        <i className="fas fa-phone"></i>
-      </a>
+     <div className="floating-buttons">
+  {/* Téléphone */}
+  <a href="tel:+33612345678" className="floating-btn" aria-label="Téléphoner">
+    <i className="fas fa-phone"></i>
+  </a>
+
+  {/* TikTok */}
+  <a href="https://www.tiktok.com/@remy_dogandme" target="_blank" className="floating-btn" aria-label="TikTok">
+    <i className="fab fa-tiktok"></i>
+  </a>
+
+  {/* Instagram */}
+  <a href="https://www.instagram.com/remy_dogandme/" target="_blank" className="floating-btn" aria-label="Instagram">
+    <i className="fab fa-instagram"></i>
+  </a>
+</div>
+
 
       {/* Navigation – à personnaliser */}
       <nav className="navbare">
-        <div className="section-nav">
-          {/* Tu peux ajouter des ancres href="#parcours" si tu ajoutes des id dans les sections */}
+        <div className="section-nav">          
         </div>
       </nav>
 
@@ -155,7 +173,7 @@ const HomePage = () => {
       <FadeInSection>
         <section className="section-container">
           <div className="content-wrapper">
-            <img className="img-left" src="/img/RDM.jpg" alt="Pourquoi choisir l'éducation canine" />
+            <img className="img-left" src="/img/Remy.jpg" alt="Pourquoi choisir l'éducation canine" />
             <div className="text-right">
               <h2>Qui suis-je/ Mon parcours</h2>
               <p>
@@ -191,7 +209,7 @@ const HomePage = () => {
               </p>
             </div>
             <div className="image-block">
-              <img src="/img/dg.jpeg" alt="Chien éducatif 2" className="side-image" />
+              <img src="/img/myst.jpeg" alt="Chien éducatif 2" className="side-image" />
               <h2>MYSTIQUE</h2>
               <p className="image-caption">
                 berger blanc suisse de 8 ans, quoi dire de plus que si aujourd'hui j'ai pris la decision d'être éducateur canin
@@ -204,6 +222,7 @@ const HomePage = () => {
 
       <FadeInSection>
       <section className="section-container">
+        <h2  id="services">LES PRESTATIONS</h2>
   <div className="content-wrapper prestations-grid">
     {/* PROMENADE */}
     <div
@@ -222,7 +241,7 @@ const HomePage = () => {
         <br />
         <em>(Ne remplace pas une séance éducative.)</em>
       </p>
-      <p className="prix">30€</p>
+      <p className="prix">30€</p> 
       <button
         className="btn-en-savoir-plus"
         onClick={(e) => {
@@ -230,8 +249,7 @@ const HomePage = () => {
           openPrestationModal("promenade");
         }}
       >
-        <i className="fas fa-paw"></i> En savoir plus
-      </button>
+        <i className="fas fa-paw"></i> En savoir plus</button>
     </div>
 
     {/* BILAN */}
@@ -342,80 +360,18 @@ const HomePage = () => {
 
       </FadeInSection>
 
-      {/* Scroll-to-top Button */}
-      {isVisible && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="scroll-to-top"
-          aria-label="Retour en haut"
-        >
-          ↑
-        </button>
-      )}
-
-      {modalPrestation && (
-  <div className="modal-overlay" onClick={closePrestationModal}>
-    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-      <button className="modal-close" onClick={closePrestationModal}>×</button>
-
-      {modalPrestation === "promenade" && (
-        <div>
-          <h2>🚶‍♂️ Promenade pédagogique</h2>
-          <img src="/img/promenade.jpg" alt="Promenade pédagogique" style={{ width: "100%", borderRadius: "8px", margin: "15px 0" }} />
-          <p>
-            Une vraie bouffée d’air frais pour votre loulou 🐾 !<br />
-            Cette balade éducative dure entre 1h et 1h30, et permet à votre chien de se dépenser physiquement tout en travaillant les bonnes bases éducatives (marche en laisse, socialisation, rappel…).<br /><br />
-            C’est ludique, bienveillant, et toujours dans le respect du rythme du chien 🐕.<br />
-            <strong>Tarif : 30€</strong><br /><br />
-            👉 Réservez au <a href="tel:+33611810229">06 11 81 02 29</a>
-          </p>
-        </div>
-      )}
-
-      {modalPrestation === "bilan" && (
-        <div>
-          <h2>🧠 Bilan comportemental</h2>
-          <img src="/img/bilan.jpg" alt="Bilan comportemental" style={{ width: "100%", borderRadius: "8px", margin: "15px 0" }} />
-          <p>
-            Le point de départ idéal pour accompagner votre loulou dans les meilleures conditions 🐶.<br />
-            Ce bilan de 2h se déroule chez vous, dans son environnement. On apprend à se connaître, on observe ses comportements, ses réactions, ses besoins...<br /><br />
-            Je vous propose ensuite un plan éducatif sur mesure, sans pression, avec des outils adaptés à vous deux.<br />
-            <strong>Tarif : 100€</strong><br /><br />
-            👉 Appelez-moi au <a href="tel:+33611810229">06 11 81 02 29</a>
-          </p>
-        </div>
-      )}
-
-      {modalPrestation === "seance" && (
-        <div>
-          <h2>🎯 Séance individuelle</h2>
-          <img src="/img/seance.jpg" alt="Séance individuelle" style={{ width: "100%", borderRadius: "8px", margin: "15px 0" }} />
-          <p>
-            On travaille à fond sur les besoins spécifiques de votre loulou, que ce soit pour le rappel, les aboiements, la marche en laisse ou encore la gestion des émotions 💡.<br />
-            Chaque séance est adaptée à vous, votre environnement, et surtout à votre chien.<br /><br />
-            On avance à votre rythme, dans la bonne humeur 🐾<br />
-            <strong>Tarif : 50€</strong><br /><br />
-            👉 Contactez-moi au <a href="tel:+33611810229">06 11 81 02 29</a>
-          </p>
-        </div>
-      )}
-
-      {modalPrestation === "forfait" && (
-        <div>
-          <h2>📦 Forfait 4 séances</h2>
-          <img src="/img/forfait.jpg" alt="Forfait 4 séances" style={{ width: "100%", borderRadius: "8px", margin: "15px 0" }} />
-          <p>
-            Un accompagnement sur le long terme, pour prendre le temps avec votre loulou et avancer en douceur 🐕‍🦺.<br />
-            Ces 4 séances espacées vous permettent de renforcer les apprentissages, d’ajuster les exercices, et de créer une vraie complicité avec votre compagnon.<br /><br />
-            C’est le format idéal pour résoudre plusieurs problématiques ou construire de bonnes bases éducatives sur la durée.<br />
-            <strong>Tarif : 150€</strong><br /><br />
-            👉 Je suis joignable au <a href="tel:+33611810229">06 11 81 02 29</a>
-          </p>
-        </div>
-      )}
-    </div>
-  </div>
+  {isVisible && (
+  <button
+    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+    className="scroll-to-top visible"
+    aria-label="Retour en haut"
+  >
+    <i className="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
 )}
+
+
+
 {modalPrestation && (
   <div className="modal-overlay" onClick={closePrestationModal}>
     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -424,7 +380,7 @@ const HomePage = () => {
       {modalPrestation === "promenade" && (
         <div>
           <h2>🚶‍♂️ Promenade pédagogique</h2>
-          <img src="/img/RDM.jpg" alt="Promenade pédagogique" className="modal-img" />
+          <img src="/img/BC.jpg" alt="Promenade pédagogique" className="modal-img" />
           <p>
             Une balade éducative pour que votre loulou 🐶 puisse se défouler et apprendre à son rythme. On combine jeux, marche en laisse, socialisation et rappel, toujours dans la bonne humeur !<br /><br />
             <strong>Durée :</strong> 1h à 1h30<br />
@@ -437,7 +393,7 @@ const HomePage = () => {
       {modalPrestation === "bilan" && (
         <div>
           <h2>🧠 Bilan comportemental</h2>
-          <img src="/img/RDM.jpg" alt="Bilan comportemental" className="modal-img" />
+          <img src="/img/BL.jpg" alt="Bilan comportemental" className="modal-img" />
           <p>
             Un moment d’échange à la maison pour mieux comprendre votre loulou, son quotidien, ses émotions et ses besoins. On établit ensemble une base éducative solide adaptée à votre binôme 🐾<br /><br />
             <strong>Durée :</strong> environ 2h<br />
@@ -450,7 +406,7 @@ const HomePage = () => {
       {modalPrestation === "seance" && (
         <div>
           <h2>🎯 Séance individuelle</h2>
-          <img src="/img/RDM.jpg" alt="Séance individuelle" className="modal-img" />
+          <img src="/img/PP.jpg" alt="Séance individuelle" className="modal-img" />
           <p>
             Une séance personnalisée pour travailler ce qui pose souci : rappel, marche en laisse, aboiements, gestion des émotions... Le tout en douceur et avec le sourire 🐕<br /><br />
             <strong>Durée :</strong> ~1h<br />
@@ -463,7 +419,7 @@ const HomePage = () => {
       {modalPrestation === "forfait" && (
         <div>
           <h2>📦 Forfait 4 séances</h2>
-          <img src="/img/RDM.jpg" alt="Forfait 4 séances" className="modal-img" />
+          <img src="/img/4F.jpg" alt="Forfait 4 séances" className="modal-img" />
           <p>
             Pour prendre le temps d’apprendre en confiance. 4 séances progressives pour accompagner votre loulou sur le long terme, et renforcer votre complicité étape par étape 🐶💛<br /><br />
             <strong>Durée :</strong> 4 séances individuelles<br />

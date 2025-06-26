@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:4000/api";
+const API_BASE = import.meta.env.VITE_API_URL;
 
 export const getGalleryImages = async (): Promise<string[]> => {
   const response = await fetch(`${API_BASE}/images`);
@@ -8,7 +8,7 @@ export const getGalleryImages = async (): Promise<string[]> => {
 
 export const uploadImage = async (file: File, token: string) => {
   const formData = new FormData();
-  formData.append("image", file); // ⚠️ correspond à multer.single("image")
+  formData.append("image", file);
 
   const response = await fetch(`${API_BASE}/upload`, {
     method: "POST",
@@ -19,7 +19,6 @@ export const uploadImage = async (file: File, token: string) => {
   });
 
   if (!response.ok) throw new Error("Erreur d'upload");
-
   return await response.json();
 };
 
@@ -32,6 +31,5 @@ export const deleteImage = async (filename: string, token: string) => {
   });
 
   if (!response.ok) throw new Error("Erreur suppression");
-
   return await response.json();
 };

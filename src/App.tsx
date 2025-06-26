@@ -11,8 +11,8 @@ import Faq from "./pages/Faq";
 import Professional from "./pages/Professional";
 import Contact from "./pages/Contact";
 import UploadForm from "./components/UploadForm";
-import LoginPage from "./components/LoginPage"; // 👈
-import PrivateRoute from "./routes/PrivateRoute"; // 👈
+import LoginPage from "./components/LoginPage"; 
+import PrivateRoute from "./routes/PrivateRoute"; 
 import "./App.css";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/photos" element={<Photos />} />
-        <Route path="/login" element={<LoginPage />} /> {/* 👈 nouvelle route */}
+        <Route path="/login" element={<LoginPage />} /> 
         <Route
           path="/admin"
           element={

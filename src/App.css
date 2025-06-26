@@ -404,6 +404,7 @@
   font-family: Arial, sans-serif;
   color: #333;
   text-align: center;
+  min-height: calc(100vh - 180px);
 }
 
 .contact-page h1 {
@@ -469,4 +470,34 @@
 
 .contact-form button:hover {
   background-color: #267029;
+}
+
+/* social media page contact  */
+
+.social-links {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.social-links h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #2f6931;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-icons a {
+  font-size: 28px;
+  color: #2f6931;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #267029;
 }
