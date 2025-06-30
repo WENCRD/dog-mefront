@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { getGalleryImages } from "../services/api";
 
+type ImageData = {
+  url: string;
+  public_id: string;
+};
+
 const Photos = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<ImageData[]>([]);
 
-useEffect(() => {
-  getGalleryImages()
-    .then((res) => setImages(res))
-    .catch(() => console.error("Erreur de chargement des photos"));
-}, []);
+  useEffect(() => {
+    getGalleryImages()
+      .then((res) => setImages(res))
+      .catch(() => console.error("Erreur de chargement des photos"));
+  }, []);
 
   return (
     <div className="main-content">
@@ -20,11 +25,11 @@ useEffect(() => {
         </p>
 
         <div className="photo-grid">
-          {images.length === 0 && <p> Aucune image pour le moment.</p>}
-          {images.map((src, index) => (
+          {images.length === 0 && <p>Aucune image pour le moment.</p>}
+          {images.map((img, index) => (
             <img
               key={index}
-              src={src}
+              src={img.url}
               alt={`photo-${index}`}
               className="photo-item"
               onClick={() => setSelectedIndex(index)}
@@ -36,10 +41,12 @@ useEffect(() => {
         {selectedIndex !== null && (
           <div className="image-modal-overlay" onClick={() => setSelectedIndex(null)}>
             <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="image-modal-close" onClick={() => setSelectedIndex(null)}>×</button>
+              <button className="image-modal-close" onClick={() => setSelectedIndex(null)}>
+                ×
+              </button>
 
               <img
-                src={images[selectedIndex]}
+                src={images[selectedIndex].url}
                 alt={`photo-${selectedIndex}`}
                 style={{
                   maxWidth: "90vw",
@@ -47,7 +54,7 @@ useEffect(() => {
                   width: "auto",
                   height: "auto",
                   borderRadius: "8px",
-                  boxShadow: "0 0 20px rgba(0, 0, 0, 0.4)"
+                  boxShadow: "0 0 20px rgba(0, 0, 0, 0.4)",
                 }}
               />
 
@@ -71,9 +78,8 @@ useEffect(() => {
           </div>
         )}
 
-        {/*  Crédit global */}
         <p className="global-credit">
-           Photos réalisées par{" "}
+          Photos réalisées par{" "}
           <a
             href="https://www.instagram.com/cm.visionbyrd/"
             target="_blank"
