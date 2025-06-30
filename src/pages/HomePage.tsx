@@ -20,12 +20,20 @@ const HomePage = () => {
     setModalPrestation(null);
   };
 
-  const [dynamicImages, setDynamicImages] = useState<string[]>([]);
-  useEffect(() => {
-    getGalleryImages()
-      .then(setDynamicImages)
-      .catch(() => console.error("Erreur chargement images"));
-  }, []);
+  type ImageData = {
+  url: string;
+  public_id: string;
+};
+
+const [dynamicImages, setDynamicImages] = useState<ImageData[]>([]);
+
+useEffect(() => {
+  getGalleryImages()
+    .then((data) => {
+      setDynamicImages(data); // Garde tous les objets (pas juste les URL)
+    })
+    .catch(() => console.error("Erreur chargement images"));
+}, []);
 
   const [activeCard, setActiveCard] = useState<string | null>(null);
  
@@ -67,7 +75,8 @@ const HomePage = () => {
   
   
 
- const images = dynamicImages.length > 0 ? dynamicImages : [
+const images = dynamicImages.length > 0
+  ? dynamicImages.map((img) => img.url) : [
     "/img/dogd.jpeg",
     "/img/dogd.jpeg",
     "/img/dogd.jpeg",
@@ -153,15 +162,15 @@ const HomePage = () => {
           }}
         >
           {images.map((img, index) => (
-            <SwiperSlide key={index}>
-              <img
-                src={img}
-                alt={`Slide ${index + 1}`}
-                onClick={() => setModalImage(img)}
-                className="swiper-image"
-              />
-            </SwiperSlide>
-          ))}
+  <SwiperSlide key={index}>
+    <img
+      src={img}
+      alt={`Slide ${index + 1}`}
+      onClick={() => setModalImage(img)}
+      className="swiper-image"
+    />
+  </SwiperSlide>
+))}
         </Swiper>
         {modalImage && (
           <div className="image-modal" onClick={closeModal}>

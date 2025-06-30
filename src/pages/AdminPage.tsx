@@ -3,9 +3,14 @@ import { useAuth } from "../context/useAuth";
 import { getGalleryImages, deleteImage } from "../services/api";
 import UploadDragDrop from "../components/UploadDragDrop";
 
+type ImageData = {
+  url: string;
+  public_id: string;
+};
+
 const DashboardAdmin = () => {
   const { token } = useAuth();
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<ImageData[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -22,24 +27,28 @@ const DashboardAdmin = () => {
     fetchImages();
   }, []);
 
-  const handleDelete = async (url: string) => {
-    const filename = url.split("/").pop();
-    if (!filename || !token) return;
+  const handleDelete = async (publicId: string) => {
+    if (!token) return;
 
     const confirmDelete = window.confirm("Supprimer cette image ?");
     if (!confirmDelete) return;
 
     try {
-      await deleteImage(filename, token);
+      await deleteImage(publicId, token);
       setSuccess("Image supprimée.");
-      await fetchImages();
+      setError("");
+      await fetchImages(); // Refresh après suppression
     } catch {
       setError("Erreur lors de la suppression.");
+      setSuccess("");
     }
   };
 
   return (
-    <div className="admin-dashboard" style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
+    <div
+      className="admin-dashboard"
+      style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}
+    >
       <h1 style={{ textAlign: "center" }}>Gestion des images</h1>
 
       <div style={{ margin: "20px 0", textAlign: "center" }}>
@@ -57,15 +66,17 @@ const DashboardAdmin = () => {
         }}
       >
         {images.map((img, index) => (
-          <div key={index} style={{ position: "relative", borderRadius: "8px", overflow: "hidden" }}>
+          <div
+            key={index}
+            style={{ position: "relative", borderRadius: "8px", overflow: "hidden" }}
+          >
             <img
-              src={img}
+              src={img.url}
               alt={`image-${index}`}
               style={{ width: "100%", height: "auto", display: "block" }}
             />
-
             <button
-              onClick={() => handleDelete(img)}
+              onClick={() => handleDelete(img.public_id)}
               style={{
                 position: "absolute",
                 top: "5px",

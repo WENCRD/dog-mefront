@@ -1,9 +1,14 @@
 const API_BASE = import.meta.env.VITE_API_URL;
 
-export const getGalleryImages = async (): Promise<string[]> => {
+type ImageData = {
+  url: string;
+  public_id: string;
+};
+
+export const getGalleryImages = async (): Promise<ImageData[]> => {
   const response = await fetch(`${API_BASE}/images`);
   if (!response.ok) throw new Error("Erreur chargement images");
-  return await response.json(); // ⬅️ Doit être un tableau de URLs Cloudinary
+  return await response.json();
 };
 
 type UploadResponse = {
