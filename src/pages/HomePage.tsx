@@ -67,7 +67,7 @@ const HomePage = () => {
   
   
 
-  const images = dynamicImages.length > 0 ? dynamicImages.map((url) => `http://localhost:4000${url}`) : [
+ const images = dynamicImages.length > 0 ? dynamicImages : [
     "/img/dogd.jpeg",
     "/img/dogd.jpeg",
     "/img/dogd.jpeg",

@@ -5,11 +5,11 @@ const Photos = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [images, setImages] = useState<string[]>([]);
 
-  useEffect(() => {
-    getGalleryImages()
-      .then((res) => setImages(res.map((path) => `http://localhost:4000${path}`)))
-      .catch(() => console.error("Erreur de chargement des photos"));
-  }, []);
+useEffect(() => {
+  getGalleryImages()
+    .then((res) => setImages(res))
+    .catch(() => console.error("Erreur de chargement des photos"));
+}, []);
 
   return (
     <div className="main-content">
