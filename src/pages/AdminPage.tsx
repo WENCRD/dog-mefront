@@ -59,10 +59,11 @@ const DashboardAdmin = () => {
         {images.map((img, index) => (
           <div key={index} style={{ position: "relative", borderRadius: "8px", overflow: "hidden" }}>
             <img
-              src={`http://localhost:4000${img}`}
+              src={img}
               alt={`image-${index}`}
               style={{ width: "100%", height: "auto", display: "block" }}
             />
+
             <button
               onClick={() => handleDelete(img)}
               style={{

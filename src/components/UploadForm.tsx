@@ -12,7 +12,9 @@ const UploadForm = () => {
 
     try {
       const result = await uploadImage(image, token);
-      setMessage(result.message || "Succès !");
+   setMessage(`Image envoyée ! Voir : ${result.url}`);
+
+
     } catch {
       setMessage("Erreur lors de l’envoi.");
     }

@@ -62,7 +62,7 @@ const UploadDragDrop = ({ onUploadSuccess }: Props) => {
       }}
       onClick={() => document.getElementById("uploadInput")?.click()}
     >
-      <p>📁 Glissez une image ici ou cliquez pour choisir un fichier</p>
+      <p> Glissez une image ici ou cliquez pour choisir un fichier</p>
       <input
         type="file"
         id="uploadInput"
