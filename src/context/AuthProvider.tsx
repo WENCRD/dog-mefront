@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
      const API_BASE = import.meta.env.VITE_API_URL;
+     console.log("API_BASE =", import.meta.env.VITE_API_URL);
 const res = await fetch(`${API_BASE}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
